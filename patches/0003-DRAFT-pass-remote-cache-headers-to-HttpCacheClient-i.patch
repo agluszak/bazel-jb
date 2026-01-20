@@ -21,7 +21,7 @@ index 9a9cb4344f..62bd5d60a2 100644
  import com.google.devtools.build.lib.remote.common.RemoteCacheClient;
  import com.google.devtools.build.lib.remote.disk.DiskCacheClient;
 @@ -101,7 +102,7 @@ public final class CombinedCacheClientFactory {
-               Math.toIntExact(options.remoteTimeout.getSeconds()),
+               Math.toIntExact(options.remoteTimeout.toSeconds()),
                options.remoteMaxConnections,
                options.remoteVerifyDownloads,
 -              ImmutableList.copyOf(options.remoteHeaders),
@@ -30,7 +30,7 @@ index 9a9cb4344f..62bd5d60a2 100644
                retrier,
                creds,
 @@ -115,7 +116,7 @@ public final class CombinedCacheClientFactory {
-             Math.toIntExact(options.remoteTimeout.getSeconds()),
+             Math.toIntExact(options.remoteTimeout.toSeconds()),
              options.remoteMaxConnections,
              options.remoteVerifyDownloads,
 -            ImmutableList.copyOf(options.remoteHeaders),
@@ -38,6 +38,6 @@ index 9a9cb4344f..62bd5d60a2 100644
              digestUtil,
              retrier,
              creds,
--- 
+--
 2.48.1
 

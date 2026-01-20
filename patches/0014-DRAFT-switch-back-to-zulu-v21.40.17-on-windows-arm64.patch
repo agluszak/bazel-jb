@@ -4,24 +4,29 @@ Date: Sat, 25 Oct 2025 17:07:03 +0200
 Subject: [PATCH] DRAFT switch back to zulu v21.40.17 on windows arm64
 
 ---
- repositories.bzl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ repositories.bzl | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/repositories.bzl b/repositories.bzl
-index 2383446ad4..78ad8c843e 100644
+index 887948e..bba85fe 100644
 --- a/repositories.bzl
 +++ b/repositories.bzl
-@@ -130,8 +130,8 @@ def embedded_jdk_repositories():
+@@ -115,11 +115,12 @@ def embedded_jdk_repositories():
+         sha256 = "112d168b97539ba52bdd0dedca65724f653b3679559d44f2749680d05f85227c",
+         url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-windows-x64-b176.4.zip",
+     )
++    # JBRSDK doesn't work well on Windows ARM64, using Zulu instead
      http_file(
          name = "openjdk_win_arm64_vanilla",
-         downloaded_file_path = "jbrsdk-win-arm64.zip",
+-        downloaded_file_path = "jbrsdk-win-arm64.zip",
 -        sha256 = "0d615a3c9e14f4bb94cf7d454e1261c4146d9d447670912dddfe6e0f578f1ec1",
 -        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-windows-aarch64-b176.4.zip",
++        downloaded_file_path = "zulu-win-arm64.zip",
 +        sha256 = "57c568355b97d288f12b720760d802b1a19c55e9b0707a5c2ad76d34fd893db8",
 +        url = "https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk21.0.6-win_aarch64.zip",
      )
- 
- def _async_profiler_repos(ctx):
--- 
+
+     # TODO: Update to JDK 25 when available for these architectures.
+--
 2.50.1
 

@@ -12,15 +12,15 @@ diff --git a/src/main/java/com/google/devtools/build/lib/remote/http/HttpDownloa
 index 561329fd2e..17b03dced2 100644
 --- a/src/main/java/com/google/devtools/build/lib/remote/http/HttpDownloadHandler.java
 +++ b/src/main/java/com/google/devtools/build/lib/remote/http/HttpDownloadHandler.java
-@@ -17,6 +17,7 @@ import static com.google.common.base.Preconditions.checkState;
- 
- import com.google.auth.Credentials;
+@@ -19,6 +19,7 @@ import com.google.auth.Credentials;
+ import com.google.common.base.Joiner;
  import com.google.common.collect.ImmutableList;
+ import com.google.common.collect.Lists;
 +import com.google.common.io.ByteStreams;
  import io.netty.buffer.ByteBuf;
  import io.netty.channel.ChannelHandlerContext;
  import io.netty.channel.ChannelPromise;
-@@ -36,7 +37,10 @@ import io.netty.handler.timeout.ReadTimeoutException;
+@@ -39,7 +40,10 @@ import io.netty.util.AsciiString;
  import io.netty.util.internal.StringUtil;
  import java.io.ByteArrayOutputStream;
  import java.io.IOException;
@@ -28,10 +28,10 @@ index 561329fd2e..17b03dced2 100644
  import java.io.OutputStream;
 +import java.net.HttpURLConnection;
 +import java.net.URI;
+ import java.util.ArrayList;
  import java.util.Map.Entry;
- 
- /** ChannelHandler for downloads. */
-@@ -96,6 +100,32 @@ final class HttpDownloadHandler extends AbstractHttpHandler<HttpObject> {
+
+@@ -103,6 +107,32 @@ final class HttpDownloadHandler extends AbstractHttpHandler<HttpObject> {
          contentLength = HttpUtil.getContentLength(response);
        }
        downloadSucceeded = response.status().equals(HttpResponseStatus.OK);
@@ -64,6 +64,6 @@ index 561329fd2e..17b03dced2 100644
        if (!downloadSucceeded) {
          out = new ByteArrayOutputStream();
        }
--- 
+--
 2.48.1
 

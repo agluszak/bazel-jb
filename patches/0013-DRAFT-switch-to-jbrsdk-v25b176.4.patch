@@ -5,122 +5,123 @@ Subject: [PATCH] DRAFT switch to jbrsdk v25b176.4
 
 ---
  repositories.bzl    | 36 ++++++++++++++++++------------------
- src/minimize_jdk.sh | 15 ++++++++++-----
- 2 files changed, 28 insertions(+), 23 deletions(-)
+ src/minimize_jdk.sh | 30 +++++++++++++++++++++++++-----
+ 2 files changed, 43 insertions(+), 23 deletions(-)
 
 diff --git a/repositories.bzl b/repositories.bzl
-index 3d6d9f7083..2383446ad4 100644
+index ab7c797..887948e 100644
 --- a/repositories.bzl
 +++ b/repositories.bzl
-@@ -79,15 +79,15 @@ def embedded_jdk_repositories():
+@@ -81,15 +81,15 @@ def embedded_jdk_repositories():
      """OpenJDK distributions used to create a version of Bazel bundled with the OpenJDK."""
      http_file(
          name = "openjdk_linux_vanilla",
--        integrity = "sha256-Kf6gF8A8ZFIhujEgjlENeuSPVzW6QWnVZcRst35/ZvI=",
+-        integrity = "sha256-Fk2QHlokC4wYUW9atVvBH8lomrboKQRa6oRnNW3Ns0A=",
 -        downloaded_file_path = "zulu-linux-vanilla.tar.gz",
--        url = "https://cdn.azul.com/zulu/bin/zulu24.28.83-ca-jdk24.0.0-linux_x64.tar.gz",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-linux_x64.tar.gz",
 +        downloaded_file_path = "jbrsdk-linux-vanilla.tar.gz",
 +        sha256 = "00d8858f489654c354b4a2c995228bd29dcb93eea079c167e4c33f7dea6ae190",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-linux-x64-b176.4.tar.gz",
      )
      http_file(
          name = "openjdk_linux_aarch64_vanilla",
--        integrity = "sha256-6J7szd/ax9xCMNA9efw9Bhgv/VwQFXz5glWIoj+UYIc=",
+-        integrity = "sha256-tg651UyXukFZVHg0qYzF0BYoHdKz5g50dcukkRMkvLQ=",
 -        downloaded_file_path = "zulu-linux-aarch64-vanilla.tar.gz",
--        url = "https://cdn.azul.com/zulu/bin/zulu24.28.83-ca-jdk24.0.0-linux_aarch64.tar.gz",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-linux_aarch64.tar.gz",
 +        downloaded_file_path = "jbrsdk-linux-aarch64-vanilla.tar.gz",
 +        sha256 = "b0cb77d197ddfad8e0ea590ff4394998a886d4d1db5aacadd2dc442e9e2e214b",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-linux-aarch64-b176.4.tar.gz",
      )
      http_file(
-         name = "openjdk_linux_s390x_vanilla",
-@@ -109,29 +109,29 @@ def embedded_jdk_repositories():
+         name = "openjdk_linux_ppc64le_vanilla",
+@@ -99,27 +99,27 @@ def embedded_jdk_repositories():
      )
      http_file(
          name = "openjdk_macos_x86_64_vanilla",
--        integrity = "sha256-e7KJtJ9+mFFSdKCj68thfTXguWH5zXaSSb9phzXf/lQ=",
+-        integrity = "sha256-ws3h0xPZBLeTw3YCFO76IH7Mp98E58QISr3x9rvrwno=",
 -        downloaded_file_path = "zulu-macos-vanilla.tar.gz",
--        url = "https://cdn.azul.com/zulu/bin/zulu24.28.83-ca-jdk24.0.0-macosx_x64.tar.gz",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-macosx_x64.tar.gz",
 +        downloaded_file_path = "jbrsdk-macos-vanilla.tar.gz",
 +        sha256 = "8295bc1945ec87bef0bc9a3afe012343b1a23a20807eb17adbd3a689cce3be1e",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-osx-x64-b176.4.tar.gz",
      )
      http_file(
          name = "openjdk_macos_aarch64_vanilla",
--        integrity = "sha256-7yXLOJCK0RZ8V1vsexOGxGR9NAwi/pCl95BlO8E8nGU=",
+-        integrity = "sha256-c/ZPa618PfMfunQPvLu+98Glzt7/u13zht15vHKrqbY=",
 -        downloaded_file_path = "zulu-macos-aarch64-vanilla.tar.gz",
--        url = "https://cdn.azul.com/zulu/bin/zulu24.28.83-ca-jdk24.0.0-macosx_aarch64.tar.gz",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-macosx_aarch64.tar.gz",
 +        downloaded_file_path = "jbrsdk-macos-aarch64-vanilla.tar.gz",
 +        sha256 = "092aa3ca64e94e386ed76aadfa5d5a2725b33804fc40c1f74e643545770ce01b",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-osx-aarch64-b176.4.tar.gz",
      )
      http_file(
          name = "openjdk_win_vanilla",
--        integrity = "sha256-Nfmnb2gAmoKWgefl801WVjTNxxaaT+TmbwSzJ8uccf8=",
+-        integrity = "sha256-Xvz05qYTyuBsgEHeijaVtzRqrQMH05e2a/VSgc8aXLY=",
 -        downloaded_file_path = "zulu-win-vanilla.zip",
--        url = "https://cdn.azul.com/zulu/bin/zulu24.28.83-ca-jdk24.0.0-win_x64.zip",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-win_x64.zip",
 +        downloaded_file_path = "jbrsdk-win-vanilla.zip",
 +        sha256 = "112d168b97539ba52bdd0dedca65724f653b3679559d44f2749680d05f85227c",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-windows-x64-b176.4.zip",
      )
- 
-     # Later version of the JDK for Windows ARM64 are not available yet.
      http_file(
          name = "openjdk_win_arm64_vanilla",
--        integrity = "sha256-V8VoNVuX0ojxK3IHYNgCsaGcVemwcHpcKtdtNP2JPbg=",
+-        integrity = "sha256-9fbYqRNpVkno4mB/4Nx5yBlTslgwE6wfuXfGPLSTW/s=",
 -        downloaded_file_path = "zulu-win-arm64.zip",
--        url = "https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk21.0.6-win_aarch64.zip",
+-        url = "https://cdn.azul.com/zulu/bin/zulu25.28.85-ca-jdk25.0.0-win_aarch64.zip",
 +        downloaded_file_path = "jbrsdk-win-arm64.zip",
 +        sha256 = "0d615a3c9e14f4bb94cf7d454e1261c4146d9d447670912dddfe6e0f578f1ec1",
 +        url = "https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25-windows-aarch64-b176.4.zip",
      )
- 
- def _async_profiler_repos(ctx):
+
+     # TODO: Update to JDK 25 when available for these architectures.
 diff --git a/src/minimize_jdk.sh b/src/minimize_jdk.sh
-index 6886157094..d017147911 100755
+index a0a65b9..15b9894 100755
 --- a/src/minimize_jdk.sh
 +++ b/src/minimize_jdk.sh
-@@ -50,15 +50,19 @@ fi
- fulljdk=$1
- out=$3
- ARCH=`uname -m`
-+UNAME=$(uname -s | tr 'A-Z' 'a-z')
- if [[ "${ARCH}" == 'ppc64le'  ]] || [[ "${ARCH}" == 's390x' ]] || [[ "${ARCH}" == 'riscv64' ]]; then
-   FULL_JDK_DIR="jdk*"
-   DOCS=""
- else
--  FULL_JDK_DIR="zulu*"
--  DOCS="DISCLAIMER readme.txt"
-+  if [[ "$UNAME" =~ darwin ]]; then
-+    FULL_JDK_DIR="jbrsdk*/Contents/Home"
-+  else
-+    FULL_JDK_DIR="jbrsdk*"
-+  fi
-+  DOCS=""
- fi
- 
--UNAME=$(uname -s | tr 'A-Z' 'a-z')
- 
- if [[ "$UNAME" =~ msys_nt* ]]; then
+@@ -64,7 +64,7 @@ if [[ "$UNAME" =~ msys_nt* ]]; then
    mkdir "tmp.$$"
-@@ -94,6 +98,7 @@ else
+   cd "tmp.$$"
+   unzip -q "../$fulljdk"
+-  cd zulu*
++  cd jbrsdk* || cd zulu*
+   # We have to add this module explicitly because it is windows specific, it allows
+   # the usage of the Windows truststore
+   # e.g. -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT
+@@ -93,10 +93,30 @@ else
+   # The --no-same-owner flag instructs tar to not try to chown extracted files
    # to the owner stored in the archive - it will try to do that when running as
    # root, but fail when running inside Docker, so we explicitly disable it.
-   tar xf "$fulljdk" --no-same-owner
-+  BASE_DIR=`pwd`
-   cd $FULL_JDK_DIR
-   ./bin/jlink --module-path ./jmods/ --add-modules "$modules" \
+-  mkdir tool_jdk
+-  tar xf "$tooljdk" --no-same-owner --strip-components=1 -C tool_jdk
+-  mkdir target_jdk
+-  tar xf "$fulljdk" --no-same-owner --strip-components=1 -C target_jdk
++  mkdir tool_jdk_extract
++  tar xf "$tooljdk" --no-same-owner -C tool_jdk_extract
++  # Handle both Zulu (zulu*/...) and JBRSDK on macOS (jbrsdk*/Contents/Home/...)
++  if [ -d tool_jdk_extract/jbrsdk*/Contents/Home ]; then
++    mv tool_jdk_extract/jbrsdk*/Contents/Home tool_jdk
++  elif [ -d tool_jdk_extract/jbrsdk* ]; then
++    mv tool_jdk_extract/jbrsdk* tool_jdk
++  else
++    mv tool_jdk_extract/*/* tool_jdk 2>/dev/null || mv tool_jdk_extract/* tool_jdk
++  fi
++  rm -rf tool_jdk_extract
++
++  mkdir target_jdk_extract
++  tar xf "$fulljdk" --no-same-owner -C target_jdk_extract
++  # Handle both Zulu (zulu*/...) and JBRSDK on macOS (jbrsdk*/Contents/Home/...)
++  if [ -d target_jdk_extract/jbrsdk*/Contents/Home ]; then
++    mv target_jdk_extract/jbrsdk*/Contents/Home target_jdk
++  elif [ -d target_jdk_extract/jbrsdk* ]; then
++    mv target_jdk_extract/jbrsdk* target_jdk
++  else
++    mv target_jdk_extract/*/* target_jdk 2>/dev/null || mv target_jdk_extract/* target_jdk
++  fi
++  rm -rf target_jdk_extract
++
+   cd target_jdk
+   "../tool_jdk/bin/jlink" --module-path ./jmods/ --add-modules "$modules" \
      --vm=server --strip-debug --no-man-pages \
-@@ -108,7 +113,7 @@ else
-     cp lib/libdt_socket.so lib/libjdwp.so reduced/lib
-   fi
-   find reduced -exec touch -ht 198001010000 {} +
--  zip -q -X -r ../reduced.zip reduced/
--  cd ..
-+  zip -q -X -r $BASE_DIR/reduced.zip reduced/
-+  cd -
-   mv reduced.zip "$out"
- fi
--- 
+--
 2.50.1
 
