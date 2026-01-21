@@ -61,7 +61,7 @@ index ed8d2ff..b718793 100644
 +  }
 +
 +  @Override
-+  protected Collection<Dirent> readdir(PathFragment path, boolean followSymlinks) throws IOException {
++  public Collection<Dirent> readdir(PathFragment path, boolean followSymlinks) throws IOException {
 +    java.nio.file.Path root = getNioPath(path);
 +    List<Dirent> dirents = Lists.newArrayList();
 +    Files.walkFileTree(root, followSymlinks ? Set.of(FileVisitOption.FOLLOW_LINKS) : Set.of(), 1, new SimpleFileVisitor<>() {
