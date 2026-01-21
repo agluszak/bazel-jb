@@ -5,8 +5,8 @@ Subject: [PATCH] DRAFT switch to jbrsdk v25b176.4
 
 ---
  repositories.bzl    | 36 ++++++++++++++++++------------------
- src/minimize_jdk.sh | 30 +++++++++++++++++++++++++-----
- 2 files changed, 43 insertions(+), 23 deletions(-)
+ src/minimize_jdk.sh | 33 +++++++++++++++++++++++++++------
+ 2 files changed, 45 insertions(+), 24 deletions(-)
 
 diff --git a/repositories.bzl b/repositories.bzl
 index ab7c797..887948e 100644
@@ -75,7 +75,7 @@ index ab7c797..887948e 100644
 
      # TODO: Update to JDK 25 when available for these architectures.
 diff --git a/src/minimize_jdk.sh b/src/minimize_jdk.sh
-index a0a65b9..15b9894 100755
+index a0a65b9..d9f3b21 100755
 --- a/src/minimize_jdk.sh
 +++ b/src/minimize_jdk.sh
 @@ -64,7 +64,7 @@ if [[ "$UNAME" =~ msys_nt* ]]; then
@@ -87,7 +87,17 @@ index a0a65b9..15b9894 100755
    # We have to add this module explicitly because it is windows specific, it allows
    # the usage of the Windows truststore
    # e.g. -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT
-@@ -93,10 +93,30 @@ else
+@@ -81,8 +81,7 @@ if [[ "$UNAME" =~ msys_nt* ]]; then
+   "$(rlocation io_bazel/src/read_manifest.exe)" reduced/bin/java.exe \
+     | sed 's|</asmv3:windowsSettings>|<activeCodePage xmlns="http://schemas.microsoft.com/SMI/2019/WindowsSettings">UTF-8</activeCodePage>&|' \
+     | "$(rlocation io_bazel/src/write_manifest.exe)" reduced/bin/java.exe
+-  cp DISCLAIMER readme.txt legal/java.base/ASSEMBLY_EXCEPTION \
+-    reduced/
++  for f in DISCLAIMER readme.txt legal/java.base/ASSEMBLY_EXCEPTION; do [ -f "$f" ] && cp "$f" reduced/; done
+   # These are necessary for --host_jvm_debug to work.
+   cp bin/dt_socket.dll bin/jdwp.dll reduced/bin
+   zip -q -X -r ../reduced.zip reduced/
+@@ -93,10 +92,30 @@ else
    # The --no-same-owner flag instructs tar to not try to chown extracted files
    # to the owner stored in the archive - it will try to do that when running as
    # root, but fail when running inside Docker, so we explicitly disable it.
